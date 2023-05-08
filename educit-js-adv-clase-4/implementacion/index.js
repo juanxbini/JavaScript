@@ -29,7 +29,26 @@ function renderDocument(data){
     let plantilla = data
     let nodo = document.createElement('div')
     nodo.innerHTML = plantilla
+    nodo.className = 'main'
     document.body.appendChild(nodo)
+    nodo.addEventListener('click',(e)=>{
+        e.preventDefault()
+        let url = `./src/plantillas/${e.target.id}.html`
+        getDocument(url, (data,err)=>{
+            if(err){
+                console.log('ha ocurrido un error')
+                return
+            }else{
+                renderContent(e.target.id, data)
+            }
+        })
+    })
+}
+function renderContent(link,data){
+    let section = document.createElement('div')
+    section.className = `${link}-content`
+    section.innerHTML = data
+    document.body.appendChild(section)
 }
 
 gif.addEventListener('load', (e)=>{
